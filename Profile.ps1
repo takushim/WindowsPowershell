@@ -10,12 +10,12 @@ Set-PSReadlineKeyHandler -Key Tab -Function Complete
 #$host.PrivateData.ErrorBackgroundColor = 'White'
 Set-PSReadLineOption -Colors @{
   Command            = 'White'
-  Number             = 'DarkGreen'
+  Number             = 'Green'
   Member             = 'White'
-  Operator           = 'DarkGreen'
+  Operator           = 'Green'
   Type               = 'White'
-  Variable           = 'DarkGreen'
-  Parameter          = 'DarkGreen'
+  Variable           = 'Green'
+  Parameter          = 'Green'
   ContinuationPrompt = 'White'
   Default            = 'White'
 }
@@ -75,6 +75,7 @@ function goto ($name = "home") {
     "2019" {$folder = [IO.Path]::Combine($spim, $name)}
     "lsm"  {$folder = $lsm}
     "tirf" {$folder = $tirf}
+    "conf" {$folder = [IO.Path]::Combine($HOME, "Documents", "WindowsPowershell")}
     "temp" {$folder = [IO.Path]::Combine($HOME, "Desktop", "temp")}
     default {
         Write-Host "Not matched: {0}" -f $name

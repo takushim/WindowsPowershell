@@ -21,23 +21,26 @@ Set-PSReadLineOption -Colors @{
 }
 
 function prompt {
-    $idx = $pwd.ProviderPath.LastIndexof("\") + 1
-    $cdn = $pwd.ProviderPath.Remove(0, $idx)
+    #$idx = $pwd.ProviderPath.LastIndexof("\") + 1
+    #$cdn = $pwd.ProviderPath.Remove(0, $idx)
+    $cdn = $pwd.ProviderPath
 
     (Get-Host).UI.RawUI.WindowTitle = $cdn + " (" + $pwd + ") "
 
    if (([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
          [Security.Principal.WindowsBuiltInRole] "Administrator")) {
-        Write-Host $env:UserDomain -NoNewLine -ForegroundColor "Red"
+        #Write-Host $env:UserDomain -NoNewLine -ForegroundColor "Red"
+        Write-Host $env:OS -NoNewLine -ForegroundColor "Red"
         Write-Host ":" -NoNewLine -ForegroundColor "White"
         Write-Host $cdn -NoNewLine -ForegroundColor "Red"
         return "# "
     }
 
-    Write-Host $env:UserDomain -NoNewLine -ForegroundColor "Green"
+    #Write-Host $env:UserDomain -NoNewLine -ForegroundColor "Green"
+    Write-Host $env:OS -NoNewLine -ForegroundColor "Green"
     Write-Host ":" -NoNewLine -ForegroundColor "White"
     Write-Host $cdn -NoNewLine -ForegroundColor "Green"
-    return "$ "
+    return "% "
 }
 
 function goenv ($name = "gpu") {

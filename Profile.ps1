@@ -100,3 +100,4 @@ function pshell {
     start-process powershell
 }
 
+Import-Module posh-git

@@ -79,7 +79,7 @@ function goto ($name = "home") {
     "lsm"  {$folder = $lsm}
     "tirf" {$folder = $tirf}
     "conf" {$folder = [IO.Path]::Combine($HOME, "Documents", "WindowsPowershell")}
-    "temp" {$folder = [IO.Path]::Combine($HOME, "Desktop", "temp")}
+    "data" {$folder = [IO.Path]::Combine($HOME, "Desktop", "data")}
     default {
         Write-Host "Not matched: {0}" -f $name
         $folder = "."

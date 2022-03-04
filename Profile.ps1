@@ -6,6 +6,13 @@ Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward
 Set-PSReadlineKeyHandler -Key Tab -Function Complete
 (Get-PSReadLineOption).HistorySearchCursorMovesToEnd = $True
 
+$onedrive = "OneDrive - National Institutes of Health"
+$onepath = "N:"
+if ((Test-Path $onepath) -eq $false) {
+    Write-Host ("Assigning {0} as {1}" -f $onedrive, $onepath)
+    subst $onepath [IO.Path]::Combine($HOME, $onedrive)
+}
+
 #$host.PrivateData.ErrorForegroundColor = 'Black'
 #$host.PrivateData.ErrorBackgroundColor = 'White'
 Set-PSReadLineOption -Colors @{
@@ -79,7 +86,8 @@ function goto ($name = "home") {
     "lsm"  {$folder = $lsm}
     "tirf" {$folder = $tirf}
     "conf" {$folder = [IO.Path]::Combine($HOME, "Documents", "WindowsPowershell")}
-    "data" {$folder = [IO.Path]::Combine($HOME, "Desktop", "data")}
+    "one" {$folder = $onepath}
+    "data" {$folder = [IO.Path]::Combine($onepath, "analysis")}
     default {
         Write-Host "Not matched: {0}" -f $name
         $folder = "."

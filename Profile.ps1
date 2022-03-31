@@ -109,3 +109,4 @@ function pshell {
 }
 
 Import-Module posh-git
+goenv gpu

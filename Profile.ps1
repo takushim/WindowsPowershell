@@ -40,6 +40,7 @@ function prompt {
         Write-Host $env:OS -NoNewLine -ForegroundColor "Red"
         Write-Host ":" -NoNewLine -ForegroundColor "White"
         Write-Host $cdn -NoNewLine -ForegroundColor "Red"
+        Write-Host
         return "# "
     }
 
@@ -47,6 +48,7 @@ function prompt {
     Write-Host $env:OS -NoNewLine -ForegroundColor "Green"
     Write-Host ":" -NoNewLine -ForegroundColor "White"
     Write-Host $cdn -NoNewLine -ForegroundColor "Green"
+    Write-Host
     return "% "
 }
 

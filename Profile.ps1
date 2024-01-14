@@ -6,13 +6,6 @@ Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward
 Set-PSReadlineKeyHandler -Key Tab -Function Complete
 (Get-PSReadLineOption).HistorySearchCursorMovesToEnd = $True
 
-$onedrive = [IO.Path]::Combine($HOME, "OneDrive - National Institutes of Health")
-$onepath = "N:"
-if ((Test-Path $onepath) -eq $false) {
-    Write-Host ("Assigning {0} as {1}" -f $onedrive, $onepath)
-    subst $onepath $onedrive
-}
-
 #$host.PrivateData.ErrorForegroundColor = 'Black'
 #$host.PrivateData.ErrorBackgroundColor = 'White'
 Set-PSReadLineOption -Colors @{

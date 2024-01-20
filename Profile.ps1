@@ -68,21 +68,11 @@ function cdenv {
 }
 
 function goto ($name = "home") {
-    $spim = "Y:\spim\"
-    $lsm = "Y:\lsm"
-    $tirf = "Y:\tirf"
     switch ($name) {
     "bin"  {$folder = [IO.Path]::Combine($HOME, $name)}
     "env"  {$folder = [IO.Path]::Combine($HOME, $name)}
     "home" {$folder = "$HOME"}
-    "2021" {$folder = [IO.Path]::Combine($spim, $name)}
-    "2020" {$folder = [IO.Path]::Combine($spim, $name)}
-    "2019" {$folder = [IO.Path]::Combine($spim, $name)}
-    "lsm"  {$folder = $lsm}
-    "tirf" {$folder = $tirf}
-    "conf" {$folder = [IO.Path]::Combine($HOME, "Documents", "WindowsPowershell")}
-    "one" {$folder = $onepath}
-    "data" {$folder = [IO.Path]::Combine($onepath, "analysis")}
+    "config" {$folder = [IO.Path]::Combine($HOME, "Documents", "WindowsPowershell")}
     default {
         Write-Host "Not matched: {0}" -f $name
         $folder = "."
@@ -91,16 +81,8 @@ function goto ($name = "home") {
     Set-Location $folder
 }
 
-function keepconnect {
-    while (1) {
-        Write-Output "keepalive" > temporary_file_to_keep_connection.txt
-        Write-Output "keeping access"
-        Start-Sleep 5
-    }
-}
-
 function pshell {
-    start-process powershell
+    Start-Process powershell
 }
 
 goenv gpu

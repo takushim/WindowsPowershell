@@ -45,7 +45,7 @@ function prompt {
     return "% "
 }
 
-function goenv ($name = "gpu") {
+function goenv ($name = "gpu2") {
     $envfile = [IO.Path]::Combine($HOME, ".venv", $name, "Scripts\Activate.ps1")
     if (Test-Path($envfile)) {
         . $envfile
@@ -85,4 +85,4 @@ function pshell {
     Start-Process powershell
 }
 
-goenv gpu
+goenv

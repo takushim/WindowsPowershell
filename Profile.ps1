@@ -20,6 +20,10 @@ Set-PSReadLineOption -Colors @{
   Default            = 'White'
 }
 
+if ($env:PATHEXT -notmatch '(^|;)\.PY($|;)') {
+    $env:PATHEXT += ';.PY'
+}
+
 function prompt {
     #$idx = $pwd.ProviderPath.LastIndexof("\") + 1
     #$cdn = $pwd.ProviderPath.Remove(0, $idx)

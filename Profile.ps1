@@ -24,6 +24,27 @@ if ($env:PATHEXT -notmatch '(^|;)\.PY($|;)') {
     $env:PATHEXT += ';.PY'
 }
 
+$dropbox_reg = "HKCU:\Software\SyncEngines\Providers\Dropbox"
+$dropbox_ids = Get-ChildItem -Path $dropbox_reg -ErrorAction Stop |
+  ForEach-Object {
+    $n = $_.PSChildName
+    $v = 0L
+    if ([Int64]::TryParse($n, [ref]$v)) {
+        [pscustomobject]@{ Name = $n; Id = $v; PsPath = $_.PsPath }
+    }
+  } | Sort-Object Id
+
+if ($dropbox_ids) {
+    $dropbox_id = $dropbox_ids[0]
+    $mountpoint = (Get-ItemProperty -Path $dropbox_id.PsPath -Name "MountPoint" -ErrorAction Stop).MountPoint
+    $dropbox_folder = (Get-ChildItem -LiteralPath "$mountpoint" -Directory -Force -ErrorAction Stop | 
+        Where-Object {$_.Name -notlike '.*'})[0].FullName
+    $bin_folders = (Get-ChildItem -LiteralPath (Join-Path $dropbox_folder "bin") -Directory -ErrorAction Stop)
+    foreach ($bin_folder in $bin_folders) {
+        $env:PATH += ";$($bin_folder.FullName)"
+    }
+}
+
 function prompt {
     #$idx = $pwd.ProviderPath.LastIndexof("\") + 1
     #$cdn = $pwd.ProviderPath.Remove(0, $idx)

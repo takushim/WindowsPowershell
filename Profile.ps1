@@ -39,9 +39,13 @@ if ($dropbox_ids) {
     $mountpoint = (Get-ItemProperty -Path $dropbox_id.PsPath -Name "MountPoint" -ErrorAction Stop).MountPoint
     $dropbox_folder = (Get-ChildItem -LiteralPath "$mountpoint" -Directory -Force -ErrorAction Stop | 
         Where-Object {$_.Name -notlike '.*'})[0].FullName
-    $bin_folders = (Get-ChildItem -LiteralPath (Join-Path $dropbox_folder "bin") -Directory -ErrorAction Stop)
-    foreach ($bin_folder in $bin_folders) {
-        $env:PATH += ";$($bin_folder.FullName)"
+    $bin_path = Join-Path $dropbox_folder "bin"
+    
+    if (Test-Path -LiteralPath $bin_path -PathType Container) {
+        $bin_folders = Get-ChildItem -LiteralPath $bin_path -Directory -ErrorAction SilentlyContinue
+        foreach ($folder in $bin_folders) {
+            $env:PATH += ";$($folder.FullName)"
+        }
     }
 }
 

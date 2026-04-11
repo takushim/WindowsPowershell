@@ -42,7 +42,10 @@ if ($dropbox_ids) {
     $bin_folders = (Get-ChildItem -LiteralPath (Join-Path $dropbox_folder "bin") -Directory -ErrorAction Stop)
     foreach ($bin_folder in $bin_folders) {
         $env:PATH += ";$($bin_folder.FullName)"
-    }
+        $psh_path = Join-Path $bin_folder.FullName "psh"
+        if (Test-Path -LiteralPath $psh_path -PathType Container) {
+            $env:PATH += ";$psh_path"
+        }    }
 }
 
 function prompt {

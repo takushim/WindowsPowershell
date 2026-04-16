@@ -45,6 +45,7 @@ if ($dropbox_ids) {
         $bin_folders = Get-ChildItem -LiteralPath $bin_path -Directory -ErrorAction SilentlyContinue
         foreach ($folder in $bin_folders) {
             $env:PATH += ";$($folder.FullName)"
+            $psh_path = Join-Path -Path $folder.FullName -ChildPath "psh"
             if (Test-Path -LiteralPath $psh_path -PathType Container) {
                 $env:PATH += ";$psh_path"
             }

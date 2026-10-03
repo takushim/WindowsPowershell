@@ -210,8 +210,13 @@ if ($dropbox_ids) {
             }
         }
     }
-}
 
+    # Map the Dropbox folder to R: if R: is not already in use
+    if (-not (Test-Path "R:\")) {
+        subst R: "$dropbox_folder"
+    }
+
+}
 
 function goenv ($name = "gpu2") {
     $envfile = [IO.Path]::Combine($HOME, ".venv", $name, "Scripts\Activate.ps1")
@@ -221,6 +226,36 @@ function goenv ($name = "gpu2") {
     else {
         Write-Host "No environment named:" $name 
     }
+}
+
+function mkenv ($name) {
+    if (-not $name) {
+        Write-Host "Usage: mkenv <name>"
+        return
+    }
+
+    $envfolder = [IO.Path]::Combine($HOME, ".venv")
+    $envpath = [IO.Path]::Combine($envfolder, $name)
+
+    if (-not (Test-Path -LiteralPath $envfolder -PathType Container)) {
+        New-Item -ItemType Directory -Path $envfolder | Out-Null
+    }
+
+    if (Test-Path -LiteralPath $envpath) {
+        Write-Host "Environment already exists:" $name
+        return
+    }
+
+    Write-Host "Creating environment:" $envpath
+    python -m venv $envpath
+
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Failed to create environment:" $name
+        return
+    }
+
+    Write-Host "Created environment:" $name
+    goenv $name
 }
 
 function lsenv {
